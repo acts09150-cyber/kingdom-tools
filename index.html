@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <title>킹덤 빌더 도구함 | 일목균형표 시간론 계산기 & 로또 추출기</title>
+    <meta name="description" content="주식 투자자를 위한 일목균형표 변곡점 계산기와 행운의 로또 번호 추출 도구를 제공합니다.">
+    <meta name="keywords" content="일목균형표, 시간론, 변곡점 계산기, 주식 계산기, 로또 번호 추출, 킹덤 빌더">
 
-<title>킹덤 빌더 도구함 | 일목균형표 시간론 계산기 & 로또 추출기</title>
-<meta name="description" content="주식 투자자를 위한 일목균형표 변곡점 계산기와 행운의 로또 번호 추출 도구를 제공합니다.">
-<meta name="keywords" content="일목균형표, 시간론, 변곡점 계산기, 주식 계산기, 로또 번호 추출, 킹덤 빌더">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8675368228460145"
-     crossorigin="anonymous"></script>
-
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8675368228460145" crossorigin="anonymous"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>킹덤 빌더 도구 모음 | 주식 시간론 & 로또 추출기</title>
     <style>
         :root {
             --bg-color: #f4f7f9;
@@ -42,7 +38,6 @@
             line-height: 1.6;
         }
 
-        /* 우측 상단 다크모드 토글 */
         .theme-toggle {
             position: fixed;
             top: 20px; right: 20px;
@@ -67,7 +62,6 @@
         header { text-align: center; margin-bottom: 40px; }
         header h1 { color: var(--text-main); font-size: 2.2rem; margin-bottom: 10px; }
 
-        /* 탭 메뉴 */
         .tabs {
             display: flex;
             gap: 10px;
@@ -98,25 +92,12 @@
         }
         .tool-card.active { display: block; }
 
-        /* 애드센스 영역 */
-        .ads-box {
-            background: rgba(0,0,0,0.03);
-            border: 1px dashed #ccc;
-            margin: 20px 0;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 0.8rem;
-        }
-
-        /* 주식 계산기 스타일 */
         .input-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-main); }
         input[type="date"] {
             width: 100%; padding: 15px; border-radius: 12px;
             border: 2px solid #e2e8f0; font-size: 1rem;
+            box-sizing: border-box;
         }
         .res-item {
             padding: 15px; background: rgba(212, 175, 55, 0.1);
@@ -124,7 +105,6 @@
             margin-top: 15px; border-radius: 8px;
         }
 
-        /* 로또 스타일 */
         .lotto-display {
             display: flex; gap: 10px; justify-content: center;
             flex-wrap: wrap; margin-top: 30px;
@@ -151,7 +131,6 @@
         button.main-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
         footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
-
     </style>
 </head>
 <body>
@@ -165,16 +144,14 @@
     </header>
 
     <div style="margin: 20px 0; text-align: center; min-height: 100px;">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8675368228460145"
-         data-ad-slot="1406961953"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8675368228460145"
+             data-ad-slot="1406961953"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="showTab('stock')">📈 주식 시간론</button>
@@ -200,16 +177,14 @@
     </div>
 
     <div style="margin: 30px 0; text-align: center; min-height: 100px;">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8675368228460145"
-         data-ad-slot="7724958291"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8675368228460145"
+             data-ad-slot="7724958291"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
 
     <footer>
         © 2026 Kingdom Builder Finance. All Rights Reserved.
@@ -217,12 +192,8 @@
 </div>
 
 <script>
-    // 테마 토글
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-    }
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 
-    // 탭 전환
     function showTab(tabId) {
         document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -230,13 +201,13 @@
         event.currentTarget.classList.add('active');
     }
 
-    // 주식 영업일 계산 로직 (2026 공휴일 포함)
     const holidays = ["2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-03-01", "2026-03-02", "2026-05-05", "2026-05-24", "2026-05-25", "2026-10-09", "2026-12-25", "2026-12-31"];
     
     function addTradingDays(date, days) {
         let res = new Date(date);
         let count = 0;
-        while(count < days) {
+        // 일목균형표는 기준일 당일을 1일로 포함하므로, days-1 만큼만 더합니다.
+        while(count < (days - 1)) {
             res.setDate(res.getDate() + 1);
             let day = res.getDay();
             let dStr = res.toISOString().split('T')[0];
@@ -249,14 +220,17 @@
         const val = document.getElementById('baseDate').value;
         if(!val) return alert('날짜를 선택하세요!');
         const base = new Date(val);
+        
+        // 수정된 결과 출력 영역
         document.getElementById('stockRes').innerHTML = `
+            <div class="res-item"><b>단기 변곡 (13일):</b> ${addTradingDays(base, 13)}</div>
             <div class="res-item"><b>1차 변곡 (17일):</b> ${addTradingDays(base, 17)}</div>
             <div class="res-item"><b>2차 변곡 (26~33일):</b> ${addTradingDays(base, 26)} ~ ${addTradingDays(base, 33)}</div>
             <div class="res-item"><b>52일 목표 (43일):</b> ${addTradingDays(base, 43)}</div>
+            <div class="res-item"><b>장기 복합 (77일):</b> ${addTradingDays(base, 77)}</div>
         `;
     }
 
-    // 로또 로직
     function genLotto() {
         const nums = [];
         while(nums.length < 6) {
@@ -267,11 +241,7 @@
         const resDiv = document.getElementById('lottoRes');
         resDiv.innerHTML = '';
         nums.forEach(n => {
-            let color = "#fbc02d"; // 1-10 노랑
-            if(n > 10) color = "#1976d2"; // 11-20 파랑
-            if(n > 20) color = "#d32f2f"; // 21-30 빨강
-            if(n > 30) color = "#616161"; // 31-40 회색
-            if(n > 40) color = "#388e3c"; // 41-45 초록
+            let color = "#fbc02d"; if(n > 10) color = "#1976d2"; if(n > 20) color = "#d32f2f"; if(n > 30) color = "#616161"; if(n > 40) color = "#388e3c";
             resDiv.innerHTML += `<div class="ball" style="background:${color}">${n}</div>`;
         });
     }
