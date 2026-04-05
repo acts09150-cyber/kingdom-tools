@@ -1,212 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>킹덤 빌더 도구함 | 일목균형표 시간론 계산기 & 로또 추출기</title>
-    <meta name="description" content="주식 투자자를 위한 일목균형표 변곡점 계산기와 행운의 로또 번호 추출 도구를 제공합니다.">
-    <meta name="keywords" content="일목균형표, 시간론, 변곡점 계산기, 주식 계산기, 로또 번호 추출, 킹덤 빌더">
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8675368228460145" crossorigin="anonymous"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Builder | 전문가용 시간론 분석 리포트</title>
     <style>
         :root {
-            --bg-color: #f4f7f9;
-            --card-bg: #ffffff;
-            --text-main: #1a237e;
-            --text-sub: #333333;
-            --primary: #1a237e;
-            --secondary: #d4af37;
-            --accent: #d32f2f;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-blue: #0a192f;
+            --gold: #d4af37;
+            --text-dark: #1f2937;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
         }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 40px auto; padding: 40px; background: var(--white); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-top: 10px solid var(--primary-blue); }
+        
+        /* 헤더 섹션 */
+        header { border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
+        header h1 { font-size: 2rem; color: var(--primary-blue); margin: 0; letter-spacing: -1px; }
+        header p { color: var(--gold); font-weight: bold; margin-top: 5px; }
 
-        body.dark-mode {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-sub: #cbd5e1;
-            --primary: #6366f1;
-        }
+        /* 입력 섹션 */
+        .input-section { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; background: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; color: var(--primary-blue); }
+        input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+        
+        .btn-analyze { grid-column: span 3; padding: 15px; background: var(--primary-blue); color: var(--white); border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-analyze:hover { background: #112240; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-sub);
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            margin: 0; padding: 0;
-            transition: var(--transition);
-            line-height: 1.6;
-        }
+        /* 리포트 결과 섹션 */
+        #reportContent { display: none; }
+        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .report-header h2 { font-size: 1.4rem; color: var(--primary-blue); margin: 0; }
+        .report-date { font-size: 0.9rem; color: #6b7280; }
 
-        .theme-toggle {
-            position: fixed;
-            top: 20px; right: 20px;
-            z-index: 1000;
-            background: var(--card-bg);
-            border: 2px solid var(--primary);
-            padding: 10px 15px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: var(--transition);
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: var(--primary-blue); color: var(--white); padding: 12px; text-align: left; font-size: 0.9rem; }
+        td { padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
+        .highlight-row { background: #fffcf0; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: white; margin-right: 5px; }
+        .tag-basic { background: #3b82f6; }
+        .tag-complex { background: #10b981; }
+        .tag-cycle { background: #f59e0b; }
 
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 20px;
-        }
+        .analysis-box { margin-top: 30px; padding: 20px; border: 1px solid var(--gold); border-radius: 8px; background: #fffdf5; }
+        .analysis-box h3 { margin-top: 0; color: var(--primary-blue); font-size: 1.1rem; }
+        
+        .footer-note { text-align: center; font-size: 0.8rem; color: #9ca3af; margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { color: var(--text-main); font-size: 2.2rem; margin-bottom: 10px; }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            justify-content: center;
+        @media print {
+            .input-section, .btn-analyze, .btn-print { display: none; }
+            .container { box-shadow: none; border: none; margin: 0; width: 100%; }
         }
-        .tab-btn {
-            padding: 12px 25px;
-            border: none;
-            background: #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: var(--transition);
-        }
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tool-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            display: none;
-            transition: var(--transition);
-        }
-        .tool-card.active { display: block; }
-
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-main); }
-        input[type="date"] {
-            width: 100%; padding: 15px; border-radius: 12px;
-            border: 2px solid #e2e8f0; font-size: 1rem;
-            box-sizing: border-box;
-        }
-        .res-item {
-            padding: 15px; background: rgba(212, 175, 55, 0.1);
-            border-left: 5px solid var(--secondary);
-            margin-top: 15px; border-radius: 8px;
-        }
-
-        .lotto-display {
-            display: flex; gap: 10px; justify-content: center;
-            flex-wrap: wrap; margin-top: 30px;
-        }
-        .ball {
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 1.2rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: bounce 0.5s ease;
-        }
-        @keyframes bounce {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        button.main-btn {
-            width: 100%; padding: 18px; border: none;
-            border-radius: 12px; background: var(--primary);
-            color: white; font-size: 1.2rem; font-weight: bold;
-            cursor: pointer; transition: 0.3s;
-        }
-        button.main-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        footer { text-align: center; padding: 40px; color: #888; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<button class="theme-toggle" onclick="toggleTheme()">🌓 모드 전환</button>
-
 <div class="container">
     <header>
-        <h1>💎 Kingdom Builder Tools</h1>
-        <p>수익과 지혜를 더하는 스마트 도구 모음</p>
+        <h1>Kingdom Builder Finance</h1>
+        <p>Professional Ichimoku Time Theory Report</p>
     </header>
 
-    <div style="margin: 20px 0; text-align: center; min-height: 100px;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8675368228460145"
-             data-ad-slot="1406961953"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('stock')">📈 주식 시간론</button>
-        <button class="tab-btn" onclick="showTab('lotto')">🍀 로또 추출기</button>
-    </div>
-
-    <div id="stock" class="tool-card active">
-        <h2>일목균형표 대등수치 계산기</h2>
-        <p>영업일 기준(주말/공휴일 제외) 변곡점을 계산합니다.</p>
+    <div class="input-section">
         <div class="input-group">
-            <label>주가 최저점(바닥) 날짜</label>
+            <label>분석 종목명</label>
+            <input type="text" id="stockName" placeholder="예: 삼성전자">
+        </div>
+        <div class="input-group">
+            <label>기준 날짜 (바닥/고점)</label>
             <input type="date" id="baseDate">
         </div>
-        <button class="main-btn" onclick="calcStock()">시간마디 계산하기</button>
-        <div id="stockRes"></div>
+        <div class="input-group">
+            <label>리포트 작성자</label>
+            <input type="text" id="author" value="Kingdom Builder">
+        </div>
+        <button class="btn-analyze" onclick="generateReport()">리포트 생성 및 분석 시작</button>
     </div>
 
-    <div id="lotto" class="tool-card">
-        <h2>행운의 로또 번호 추출기</h2>
-        <p>오늘의 행운을 킹덤 빌더와 함께 잡으세요!</p>
-        <button class="main-btn" onclick="genLotto()" style="background: #2e7d32;">번호 자동 뽑기</button>
-        <div id="lottoRes" class="lotto-display"></div>
+    <div id="reportContent">
+        <div class="report-header">
+            <h2 id="dispStockName">분석 리포트</h2>
+            <div class="report-date" id="reportGenTime"></div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>일목 수치</th>
+                    <th>예측 변곡일</th>
+                    <th>비고</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody">
+                </tbody>
+        </table>
+
+        <div class="analysis-box">
+            <h3>📝 종합 분석 소견</h3>
+            <p id="analysisText"></p>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 15px;">* 본 리포트는 일목균형표 시간론에 근거한 기술적 분석이며, 최종 투자 결정은 투자자 본인에게 있습니다.</p>
+        </div>
+
+        <button onclick="window.print()" class="btn-analyze" style="background: var(--gold); margin-top: 30px;">리포트 인쇄 / PDF 저장</button>
     </div>
 
-    <div style="margin: 30px 0; text-align: center; min-height: 100px;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8675368228460145"
-             data-ad-slot="7724958291"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
-    <footer>
-        © 2026 Kingdom Builder Finance. All Rights Reserved.
+    <footer class="footer-note">
+        © 2026 Kingdom Builder. "The Mark" Trading System Pro Version.
     </footer>
 </div>
 
 <script>
-    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
-
-    function showTab(tabId) {
-        document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
     const holidays = ["2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-03-01", "2026-03-02", "2026-05-05", "2026-05-24", "2026-05-25", "2026-10-09", "2026-12-25", "2026-12-31"];
     
     function addTradingDays(date, days) {
         let res = new Date(date);
         let count = 0;
-        // 일목균형표는 기준일 당일을 1일로 포함하므로, days-1 만큼만 더합니다.
+        // 일목균형표는 당일을 1일로 계산
         while(count < (days - 1)) {
             res.setDate(res.getDate() + 1);
             let day = res.getDay();
@@ -216,34 +127,43 @@
         return res.toLocaleDateString('ko-KR', {year:'numeric', month:'long', day:'numeric', weekday:'short'});
     }
 
-    function calcStock() {
-        const val = document.getElementById('baseDate').value;
-        if(!val) return alert('날짜를 선택하세요!');
-        const base = new Date(val);
-        
-        // 수정된 결과 출력 영역
-        document.getElementById('stockRes').innerHTML = `
-            <div class="res-item"><b>단기 변곡 (13일):</b> ${addTradingDays(base, 13)}</div>
-            <div class="res-item"><b>1차 변곡 (17일):</b> ${addTradingDays(base, 17)}</div>
-            <div class="res-item"><b>2차 변곡 (26~33일):</b> ${addTradingDays(base, 26)} ~ ${addTradingDays(base, 33)}</div>
-            <div class="res-item"><b>52일 목표 (43일):</b> ${addTradingDays(base, 43)}</div>
-            <div class="res-item"><b>장기 복합 (77일):</b> ${addTradingDays(base, 77)}</div>
-        `;
-    }
+    function generateReport() {
+        const name = document.getElementById('stockName').value || "미지정 종목";
+        const bDate = document.getElementById('baseDate').value;
+        if(!bDate) return alert('기준 날짜를 선택해 주세요.');
 
-    function genLotto() {
-        const nums = [];
-        while(nums.length < 6) {
-            let r = Math.floor(Math.random() * 45) + 1;
-            if(!nums.includes(r)) nums.push(r);
-        }
-        nums.sort((a,b) => a-b);
-        const resDiv = document.getElementById('lottoRes');
-        resDiv.innerHTML = '';
-        nums.forEach(n => {
-            let color = "#fbc02d"; if(n > 10) color = "#1976d2"; if(n > 20) color = "#d32f2f"; if(n > 30) color = "#616161"; if(n > 40) color = "#388e3c";
-            resDiv.innerHTML += `<div class="ball" style="background:${color}">${n}</div>`;
+        const base = new Date(bDate);
+        document.getElementById('reportContent').style.display = 'block';
+        document.getElementById('dispStockName').innerText = `[${name}] 시간론 변곡점 분석 리포트`;
+        document.getElementById('reportGenTime').innerText = `분석일: ${new Date().toLocaleDateString()}`;
+
+        const targets = [
+            {v: 9, t: 'tag-basic', n: '단기 1절'},
+            {v: 13, t: 'tag-basic', n: '단기 변곡'},
+            {v: 17, t: 'tag-basic', n: '단기 2절'},
+            {v: 26, t: 'tag-complex', n: '1기 (一期)'},
+            {v: 33, t: 'tag-complex', n: '단기 복합'},
+            {v: 42, t: 'tag-complex', n: '2기 (二期)'},
+            {v: 52, t: 'tag-complex', n: '1단 (一段)'},
+            {v: 65, t: 'tag-cycle', n: '중기 변곡'},
+            {v: 76, t: 'tag-cycle', n: '1순 (一巡)'},
+            {v: 129, t: 'tag-cycle', n: '대등수치 마디'}
+        ];
+
+        let html = '';
+        targets.forEach(item => {
+            const resDate = addTradingDays(base, item.v);
+            html += `<tr class="${item.v === 26 || item.v === 76 ? 'highlight-row' : ''}">
+                <td><span class="tag ${item.t}">${item.n}</span></td>
+                <td><b>${item.v}</b></td>
+                <td>${resDate}</td>
+                <td>${item.v === 26 ? '추세 변화 주목' : item.v === 76 ? '장기 마디 완성' : '-'}</td>
+            </tr>`;
         });
+        document.getElementById('reportTableBody').innerHTML = html;
+
+        document.getElementById('analysisText').innerText = 
+            `${name} 종목의 기준일(${bDate})로부터 산출된 시간마디입니다. 특히 1기(26일)가 도래하는 ${addTradingDays(base, 26)} 전후로 강력한 에너지의 응축이나 발산이 예상됩니다. 일목균형표의 괘선 분석과 병행하여 대응하시기 바랍니다.`;
     }
 </script>
 </body>
