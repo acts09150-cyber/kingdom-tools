@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kingdom Builder | 전문가용 시간론 분석 리포트</title>
     <style>
+        /* 모든 요소에 박스 사이징 적용하여 잘림 방지 */
+        * { box-sizing: border-box; }
+
         :root {
             --primary-blue: #0a192f;
             --gold: #d4af37;
@@ -13,44 +16,71 @@
             --white: #ffffff;
         }
         body { font-family: 'Pretendard', -apple-system, sans-serif; background: var(--bg-light); color: var(--text-dark); margin: 0; padding: 0; }
-        .container { max-width: 900px; margin: 40px auto; padding: 40px; background: var(--white); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-top: 10px solid var(--primary-blue); }
         
-        /* 헤더 섹션 */
+        .container { 
+            width: 95%; /* 모바일 및 태블릿 대응을 위해 유동적으로 설정 */
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 30px; 
+            background: var(--white); 
+            border-radius: 8px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+            border-top: 10px solid var(--primary-blue);
+            overflow: hidden; /* 영역 밖으로 나가는 것 방지 */
+        }
+        
         header { border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
         header h1 { font-size: 2rem; color: var(--primary-blue); margin: 0; letter-spacing: -1px; }
-        header p { color: var(--gold); font-weight: bold; margin-top: 5px; }
+        header p { color: var(--gold); font-weight: bold; margin: 0; margin-top: 5px; }
 
-        /* 입력 섹션 */
-        .input-section { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; background: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        .input-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
         .input-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; color: var(--primary-blue); }
-        input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+        input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
         
-        .btn-analyze { grid-column: span 3; padding: 15px; background: var(--primary-blue); color: var(--white); border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-analyze { width: 100%; padding: 15px; background: var(--primary-blue); color: var(--white); border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         .btn-analyze:hover { background: #112240; }
 
-        /* 리포트 결과 섹션 */
         #reportContent { display: none; }
-        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; flex-wrap: wrap; }
         .report-header h2 { font-size: 1.4rem; color: var(--primary-blue); margin: 0; }
         .report-date { font-size: 0.9rem; color: #6b7280; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        /* 테이블 스크롤 방지 및 너비 고정 */
+        .table-container { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
         th { background: var(--primary-blue); color: var(--white); padding: 12px; text-align: left; font-size: 0.9rem; }
-        td { padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
+        td { padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; word-break: break-all; }
+        
         .highlight-row { background: #fffcf0; }
-        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: white; margin-right: 5px; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: white; margin-right: 5px; white-space: nowrap; }
         .tag-basic { background: #3b82f6; }
         .tag-complex { background: #10b981; }
         .tag-cycle { background: #f59e0b; }
 
-        .analysis-box { margin-top: 30px; padding: 20px; border: 1px solid var(--gold); border-radius: 8px; background: #fffdf5; }
+        /* 분석 소견 잘림 방지 핵심 설정 */
+        .analysis-box { 
+            margin-top: 30px; 
+            padding: 20px; 
+            border: 1px solid var(--gold); 
+            border-radius: 8px; 
+            background: #fffdf5; 
+            width: 100%;
+        }
         .analysis-box h3 { margin-top: 0; color: var(--primary-blue); font-size: 1.1rem; }
+        #analysisText { 
+            line-height: 1.7; 
+            word-break: keep-all; /* 단어 단위로 줄바꿈하여 가독성 향상 */
+            overflow-wrap: break-word; /* 긴 단어는 강제로 줄바꿈 */
+            margin-bottom: 0;
+        }
         
         .footer-note { text-align: center; font-size: 0.8rem; color: #9ca3af; margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; }
 
         @media print {
-            .input-section, .btn-analyze, .btn-print { display: none; }
-            .container { box-shadow: none; border: none; margin: 0; width: 100%; }
+            .input-section, .btn-analyze, .btn-print, .theme-toggle { display: none !important; }
+            .container { box-shadow: none; border: none; margin: 0; width: 100%; padding: 0; }
+            body { background: white; }
+            .analysis-box { page-break-inside: avoid; } /* 인쇄 시 박스가 잘리지 않게 설정 */
         }
     </style>
 </head>
@@ -84,23 +114,27 @@
             <div class="report-date" id="reportGenTime"></div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>구분</th>
-                    <th>일목 수치</th>
-                    <th>예측 변곡일</th>
-                    <th>비고</th>
-                </tr>
-            </thead>
-            <tbody id="reportTableBody">
-                </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">구분</th>
+                        <th style="width: 15%;">수치</th>
+                        <th style="width: 35%;">예측 변곡일</th>
+                        <th style="width: 20%;">비고</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                    </tbody>
+            </table>
+        </div>
 
         <div class="analysis-box">
             <h3>📝 종합 분석 소견</h3>
             <p id="analysisText"></p>
-            <p style="font-size: 0.85rem; color: #666; margin-top: 15px;">* 본 리포트는 일목균형표 시간론에 근거한 기술적 분석이며, 최종 투자 결정은 투자자 본인에게 있습니다.</p>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 15px; border-top: 1px dashed #d4af37; padding-top: 10px;">
+                * 본 리포트는 일목균형표 시간론에 근거한 기술적 분석이며, 최종 투자 결정은 투자자 본인에게 있습니다.
+            </p>
         </div>
 
         <button onclick="window.print()" class="btn-analyze" style="background: var(--gold); margin-top: 30px;">리포트 인쇄 / PDF 저장</button>
@@ -117,7 +151,6 @@
     function addTradingDays(date, days) {
         let res = new Date(date);
         let count = 0;
-        // 일목균형표는 당일을 1일로 계산
         while(count < (days - 1)) {
             res.setDate(res.getDate() + 1);
             let day = res.getDay();
@@ -130,12 +163,13 @@
     function generateReport() {
         const name = document.getElementById('stockName').value || "미지정 종목";
         const bDate = document.getElementById('baseDate').value;
+        const writer = document.getElementById('author').value;
         if(!bDate) return alert('기준 날짜를 선택해 주세요.');
 
         const base = new Date(bDate);
         document.getElementById('reportContent').style.display = 'block';
-        document.getElementById('dispStockName').innerText = `[${name}] 시간론 변곡점 분석 리포트`;
-        document.getElementById('reportGenTime').innerText = `분석일: ${new Date().toLocaleDateString()}`;
+        document.getElementById('dispStockName').innerText = `[${name}] 시간론 분석 리포트`;
+        document.getElementById('reportGenTime').innerText = `작성자: ${writer} | 분석일: ${new Date().toLocaleDateString()}`;
 
         const targets = [
             {v: 9, t: 'tag-basic', n: '단기 1절'},
@@ -157,13 +191,16 @@
                 <td><span class="tag ${item.t}">${item.n}</span></td>
                 <td><b>${item.v}</b></td>
                 <td>${resDate}</td>
-                <td>${item.v === 26 ? '추세 변화 주목' : item.v === 76 ? '장기 마디 완성' : '-'}</td>
+                <td>${item.v === 26 ? '변곡 주의' : item.v === 76 ? '마디 완성' : '-'}</td>
             </tr>`;
         });
         document.getElementById('reportTableBody').innerHTML = html;
 
         document.getElementById('analysisText').innerText = 
-            `${name} 종목의 기준일(${bDate})로부터 산출된 시간마디입니다. 특히 1기(26일)가 도래하는 ${addTradingDays(base, 26)} 전후로 강력한 에너지의 응축이나 발산이 예상됩니다. 일목균형표의 괘선 분석과 병행하여 대응하시기 바랍니다.`;
+            `${name} 종목의 기준일(${bDate})로부터 산출된 주요 시간마디입니다. 특히 일목균형표의 1기(26일)가 도래하는 ${addTradingDays(base, 26)} 전후는 매우 중요한 변곡점이 될 가능성이 높습니다. 현재 진행 중인 'The Mark' 트레이딩 시스템과 연계하여 최적의 진입 및 청산 타이밍을 포착하시기 바랍니다.`;
+        
+        // 리포트 생성 후 부드럽게 아래로 스크롤
+        window.scrollTo({ top: document.getElementById('reportContent').offsetTop - 20, behavior: 'smooth' });
     }
 </script>
 </body>
